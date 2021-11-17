@@ -60,6 +60,16 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+<<<<<<< HEAD
+=======
+		
+		<dependency>
+		<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+>>>>>>> 512d5c07dc75e1a53b19a1ce48df068fbe1583f1
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
