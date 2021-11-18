@@ -1,7 +1,9 @@
 package org.serratec.ecommerce.services;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.serratec.ecommerce.dto.ProdutoDTO;
 import org.serratec.ecommerce.entity.Produto;
 import org.serratec.ecommerce.repositories.ProdutoRepository;
 import org.serratec.ecommerce.services.exceptions.DataIntegrityException;
@@ -15,6 +17,10 @@ public class ProdutoService {
 
 	@Autowired
 	ProdutoRepository repo;
+
+	public List<Produto> listar() {
+		return repo.findAll();
+	}
 
 	public Produto buscar(Long id) {
 		Optional<Produto> obj = repo.findById(id);
@@ -36,14 +42,5 @@ public class ProdutoService {
 		return repo.save(obj);
 	}
 
-	public void delete(Long id) {
-		buscar(id);
-		try {
-			repo.deleteById(id);
-		} catch (DataIntegrityViolationException e) {
 
-		}
-		throw new DataIntegrityException("Não é possivel excluir um produto que possua uma Categoria ");
-
-	}
 }
