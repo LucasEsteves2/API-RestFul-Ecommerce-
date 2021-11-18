@@ -7,7 +7,7 @@ import org.serratec.ecommerce.entity.Cliente;
 import org.serratec.ecommerce.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,21 +17,12 @@ public class ClienteService {
 	private ClienteRepository clienteRepository;
 
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	//private BCryptPasswordEncoder passwordEncoder;
 
 	public List<Cliente> findAll() {
 		return clienteRepository.findAll();
 	}
 	
-
-	//public Cliente inserir(Cliente client) throws EmailException {
-	//	Cliente cliente = clienteRepository.findByEmail(client.getEmail());
-		//if (cliente != null) {
-		//	throw new EmailException("Email já existente");
-		//}
-		//client.setSenha(passwordEncoder.encode(client.getSenha()));
-		//return clienteRepository.save(client);
-	//}
 
 	
 	public ResponseEntity<Cliente> buscaId(Long id) {
