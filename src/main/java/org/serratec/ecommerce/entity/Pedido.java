@@ -20,7 +20,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class Pedido {
 
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date data_pedido;
@@ -30,12 +31,15 @@ public class Pedido {
 	@JoinColumn(name="id_cliente")
 	private Cliente cliente;
 	
-	
+	@ManyToOne
+	@JoinColumn(name = "id_endereco")
 	private Endereco enderecoEntegra;
 	
 	
+	@OneToOne(cascade = CascadeType.ALL,mappedBy = "pedido")
 	private Pagamento pagamento;
 
+	@OneToMany(mappedBy = "id.pedido")
 	private Set<ItemPedido> itens = new HashSet<>();
 	
 	public Pedido()
