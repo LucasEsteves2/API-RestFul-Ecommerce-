@@ -42,5 +42,15 @@ public class ProdutoService {
 		return repo.save(obj);
 	}
 
+	public void delete(Long id) {
+		buscar(id);
+		try {
+			repo.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel excluir um produto que possua uma Categoria ");
+		}
+
+	}
+
 
 }
