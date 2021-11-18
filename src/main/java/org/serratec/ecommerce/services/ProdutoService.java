@@ -52,5 +52,10 @@ public class ProdutoService {
 
 	}
 
+	// converte o dto em objt
+	public Produto fromDTO(ProdutoDTO objDto) {
+		return new Produto(objDto.getId(), objDto.getNome(), objDto.getValor(), objDto.getDescricao(),
+				objDto.getQtd_estoque(), objDto.getData_cadastro(), null, null);
 
+	}
 }
