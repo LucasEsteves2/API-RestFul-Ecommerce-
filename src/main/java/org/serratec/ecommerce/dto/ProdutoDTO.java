@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Length;
+import org.serratec.ecommerce.entity.Categoria;
 import org.serratec.ecommerce.entity.Produto;
 public class ProdutoDTO implements Serializable {
 	
@@ -24,6 +26,10 @@ public class ProdutoDTO implements Serializable {
 	private Integer qtd_estoque;
 	@NotNull(message = " A data de cadastro  Não pode ser nulo")
 	private Date data_cadastro;
+	
+	
+	private Long idCategoria;
+	
 	
 	
 	public ProdutoDTO()
@@ -91,6 +97,13 @@ public class ProdutoDTO implements Serializable {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Long getIdCategoria() {
+		return idCategoria;
+	}
+	
+	public void setIdCategoria(Long idCategoria) {
+		this.idCategoria = idCategoria;
 	}
 	
 	

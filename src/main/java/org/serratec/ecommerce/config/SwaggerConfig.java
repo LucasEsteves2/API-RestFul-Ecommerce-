@@ -52,7 +52,7 @@ public class SwaggerConfig {
 	private ApiInfo apiInfo() {
 		return new ApiInfo("API Ecommerce Serratec", "Api criada para o projeto final da disciplina java2",
 				"Versão 1.0", null,
-				new Contact("[GRUPO 3] Lucas Esteves - Natalino Esteves - Felipe -  Lais - Rodrigo ",
+				new Contact("[GRUPO 3] Lucas Esteves - Natalino Esteves - Felipe Antunes -  Lais Jarlita - Rodrigo Ternis - Leticia ",
 						"https://github.com/LucasEsteves2/ecommerce-API-Restful", null),
 				null, null, Collections.emptyList() // Vendor Extensions
 		);

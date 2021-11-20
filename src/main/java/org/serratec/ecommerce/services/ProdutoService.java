@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.serratec.ecommerce.dto.ProdutoDTO;
+import org.serratec.ecommerce.entity.Categoria;
 import org.serratec.ecommerce.entity.Produto;
 import org.serratec.ecommerce.repositories.ProdutoRepository;
 import org.serratec.ecommerce.services.exceptions.DataIntegrityException;
@@ -11,8 +12,6 @@ import org.serratec.ecommerce.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +20,10 @@ public class ProdutoService {
 	@Autowired
 	ProdutoRepository repo;
 
+	
+	@Autowired
+	CategoriaService serviceCategoria;
+	
 	public List<Produto> listar() {
 		return repo.findAll();
 	}
@@ -57,9 +60,16 @@ public class ProdutoService {
 
 	// converte o dto em objt
 	public Produto fromDTO(ProdutoDTO objDto) {
-		return new Produto(objDto.getId(), objDto.getNome(), objDto.getValor(), objDto.getDescricao(),
-				objDto.getQtd_estoque(), objDto.getData_cadastro(), null, null);
+		
+		
+		Categoria cat=serviceCategoria.buscar(objDto.getIdCategoria());
 
+		
+		
+		return new Produto(objDto.getId(), objDto.getNome(), objDto.getValor(), objDto.getDescricao(),
+				objDto.getQtd_estoque(), objDto.getData_cadastro(), cat, null);
+
+		
 	}
 	
 	
