@@ -1,12 +1,14 @@
 package org.serratec.ecommerce.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.validation.Valid;
 
 import org.serratec.ecommerce.dto.ClienteDTO;
 import org.serratec.ecommerce.dto.ClienteNewDTO;
 import org.serratec.ecommerce.entity.Cliente;
+import org.serratec.ecommerce.entity.Produto;
 import org.serratec.ecommerce.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,17 +32,26 @@ public class ClienteController {
 
 	@Autowired
 	ClienteService service;
+	
+	@ApiOperation(value = "Retorna uma Lista de clientes")
+	@GetMapping
+	public ResponseEntity<?> listarProdutos() {
+		List<ClienteDTO> list = service.clientes();
 
-	@ApiOperation(value="Busca por ID")
+		return ResponseEntity.ok(list);
+
+	}
+
+	@ApiOperation(value = "Busca por ID")
 	@GetMapping("{id}")
-	public ResponseEntity<?> listar(@PathVariable Long id) {
+	public ResponseEntity<?> buscar(@PathVariable Long id) {
 		Cliente obj = service.listar(id);
 
 		return ResponseEntity.ok(obj);
 
 	}
 
-	@ApiOperation(value="Remove Cliente")
+	@ApiOperation(value = "Remove Cliente")
 	@DeleteMapping(value = ("/{id}"))
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 
@@ -50,7 +61,7 @@ public class ClienteController {
 
 	}
 
-	@ApiOperation(value="Insere um novo Cliente")
+	@ApiOperation(value = "Insere um novo Cliente")
 	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
 		Cliente obj = service.fromDTO(objDto);
@@ -61,7 +72,7 @@ public class ClienteController {
 		return ResponseEntity.created(uri).build();
 	}
 
-	@ApiOperation(value="Atualiza Cliente")
+	@ApiOperation(value = "Atualiza Cliente")
 	@PutMapping("/{id}")
 	public ResponseEntity<Cliente> update(@Validated @RequestBody ClienteDTO objDto, @PathVariable Long id) {
 

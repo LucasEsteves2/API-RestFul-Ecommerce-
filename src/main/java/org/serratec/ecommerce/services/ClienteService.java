@@ -1,5 +1,7 @@
 package org.serratec.ecommerce.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -77,15 +79,13 @@ public class ClienteService {
 	public Cliente fromDTO(ClienteNewDTO objDto) {
 
 		Cliente cliente = new Cliente(null, objDto.getNome(), objDto.getEmail(), objDto.getCpf(),
-				 objDto.getNome_usuario(), objDto.getSenha(),
-				objDto.getData_nasc(), null);
+				objDto.getNome_usuario(), objDto.getSenha(), objDto.getData_nasc(), null);
 		Endereco endereco = new Endereco(null, objDto.getRua(), objDto.getComplemento(), objDto.getBairro(),
 				objDto.getCep(), objDto.getNumero(), cliente, objDto.getCidade());
 
 		cliente.getEnderecos().add(endereco);
 		cliente.getTelefones().add(objDto.getTelefone1());
-		
-		
+
 		// verificando se o cliente possui +de 1 telefone
 		if (objDto.getTelefone2() != null) {
 
@@ -99,6 +99,22 @@ public class ClienteService {
 	private void upddateData(Cliente novoObj, Cliente obj) {
 		novoObj.setNome(obj.getNome());
 		novoObj.setEmail(obj.getEmail());
+
+	}
+
+	public List<ClienteDTO> clientes() {
+
+		List<Cliente> lista = new ArrayList<>();
+		lista = repo.findAll();
+
+		List<ClienteDTO> listaDTO = new ArrayList<>();
+
+		for (Cliente x : lista) {
+
+			listaDTO.add(new ClienteDTO(x));
+		}
+
+		return listaDTO;
 
 	}
 
