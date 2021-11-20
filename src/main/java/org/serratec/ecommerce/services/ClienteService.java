@@ -1,85 +1,105 @@
 package org.serratec.ecommerce.services;
 
-import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.serratec.ecommerce.dto.ClienteDTO;
+import org.serratec.ecommerce.dto.ClienteNewDTO;
 import org.serratec.ecommerce.entity.Cliente;
-//import org.serratec.ecommerce.exception.EmailException;
+import org.serratec.ecommerce.entity.Endereco;
 import org.serratec.ecommerce.repositories.ClienteRepository;
+import org.serratec.ecommerce.repositories.EnderecoRepository;
+import org.serratec.ecommerce.services.exceptions.DataIntegrityException;
+import org.serratec.ecommerce.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ClienteService {
 
 	@Autowired
-	private ClienteRepository clienteRepository;
+	private ClienteRepository repo;
 
 	@Autowired
-	//private BCryptPasswordEncoder passwordEncoder;
+	private EnderecoRepository enderecoRepository;
 
-	public List<Cliente> findAll() {
-		return clienteRepository.findAll();
+	public Cliente listar(Long id) {
+		Optional<Cliente> obj = repo.findById(id);
+		// lançando exception
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
+
 	}
-	
 
-	
-	public ResponseEntity<Cliente> buscaId(Long id) {
-		Optional<Cliente> cliente = clienteRepository.findById(id);
-		if (cliente.isPresent()) {
-			return ResponseEntity.ok(cliente.get());
+	public Cliente buscar(Long id) {
+		Optional<Cliente> obj = repo.findById(id);
+
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
+
+	}
+
+	@Transactional
+	public Cliente insert(Cliente obj) {
+		obj.setId(null);
+		obj = repo.save(obj);
+		enderecoRepository.saveAll(obj.getEnderecos());
+		return obj;
+
+	}
+
+	public Cliente update(Cliente obj) {
+		Cliente novoObj = buscar(obj.getId());
+
+		// atualiza somente os campos nome e-email
+		upddateData(novoObj, obj);
+
+		return repo.save(novoObj);
+	}
+
+	public void delete(Long id) {
+		buscar(id);
+		try {
+			repo.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel excluir porque há pedidos relacionados ");
+
 		}
-		return ResponseEntity.notFound().build();
-	}
-	
 
-	public ResponseEntity<Cliente> atualizar(Long id, Cliente cliente) {
-
-		Optional<Cliente> clienteN = clienteRepository.findById(id);
-
-		if (clienteN.isPresent()) {
-			if (null != cliente.getNome_completo()) {
-				clienteN.get().setNome_completo(cliente.getNome_completo());
-			}
-			if (null != cliente.getNome_usuario()) {
-				clienteN.get().setNome_usuario(cliente.getNome_usuario());
-			}
-			if (null != cliente.getEmail()) {
-				clienteN.get().setEmail(cliente.getEmail());
-			}
-			if (null != cliente.getSenha()) {
-				clienteN.get().setSenha(cliente.getSenha());
-			}
-			if (null != cliente.getCpf()) {
-				clienteN.get().setCpf(cliente.getCpf());
-			}
-			if (null != cliente.getData_nasc()) {
-				clienteN.get().setData_nasc(cliente.getData_nasc());
-			}
-			if (null != cliente.getTelefone()) {
-				clienteN.get().setTelefone(cliente.getTelefone());
-			}
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-		return ResponseEntity.ok(cliente = clienteRepository.save(clienteN.get()));
-	}
-	
-
-	public ResponseEntity<Void> deletarPorId(Long id) {
-		if (!clienteRepository.existsById(id)) {
-			return ResponseEntity.notFound().build();
-		}
-		clienteRepository.deleteById(id);
-		return ResponseEntity.noContent().build();
 	}
 
+	public Cliente fromDTO(ClienteDTO objDto) {
+		return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null, null, null, null);
+	}
 
-	public void save(Cliente cliente) {
-		clienteRepository.save(cliente);
+	public Cliente fromDTO(ClienteNewDTO objDto) {
+
+		Cliente cliente = new Cliente(null, objDto.getNome(), objDto.getEmail(), objDto.getCpf(),
+				 objDto.getNome_usuario(), objDto.getSenha(),
+				objDto.getData_nasc(), null);
+		Endereco endereco = new Endereco(null, objDto.getRua(), objDto.getComplemento(), objDto.getBairro(),
+				objDto.getCep(), objDto.getNumero(), cliente, objDto.getCidade());
+
+		cliente.getEnderecos().add(endereco);
+		cliente.getTelefones().add(objDto.getTelefone1());
 		
+		
+		// verificando se o cliente possui +de 1 telefone
+		if (objDto.getTelefone2() != null) {
+
+			cliente.getTelefones().add(objDto.getTelefone2());
+
+		}
+		return cliente;
+
 	}
-	
-	
+
+	private void upddateData(Cliente novoObj, Cliente obj) {
+		novoObj.setNome(obj.getNome());
+		novoObj.setEmail(obj.getEmail());
+
+	}
+
 }

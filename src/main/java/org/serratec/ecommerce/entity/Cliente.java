@@ -1,79 +1,84 @@
 package org.serratec.ecommerce.entity;
 
-import java.time.LocalDate;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.persistence.OneToMany;
 
-import org.hibernate.validator.constraints.br.CPF;
-
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "cliente", schema = "public")
-public class Cliente {
+public class Cliente implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String nome;
 	
-	@NotBlank(message = "Preencha o nome de usuario")
-	@Column(name = "nome_usuario")
-	@Size(max = 20)
-	private String nome_usuario;
-	
-	@NotBlank(message = "Preencha o nome completo")
-	@Column(name = "nome_completo")
-	@Size(max = 50)
-	private String nome_completo;
-	
-	@NotBlank(message = "Informe um E-mail")
-	@Email(message = "E-mail Inválido")
-	@Column(name = "email")
-	@Size(max = 50)
+	@Column(unique = true)
 	private String email;
-	
-	@NotBlank(message = "Informe uma senha")
-	@Column(name = "senha")
-	@Size(min = 8)
-	private String senha;
-	
-	@NotBlank(message = "Informe um CPF válido")
-	@CPF(message = "CPF Inválido")
-	@Column(name = "cpf")
-	@Size(max = 15)
 	private String cpf;
-	
-	@Column(name = "data_nasc", unique = true, nullable = false)
-	private LocalDate data_nasc;
-	
-	@Column(name = "telefone")
-	@Size(max = 20)
-	private String telefone;
-	
+	private String nome_usuario;
+	private String senha;
+	private Date data_nasc;
+
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Endereco> enderecos = new ArrayList<>();
+
+	// coleção que nao aceita repetiçoes
+	@ElementCollection
+	@CollectionTable(name = "TELEFONE")
+	private Set<String> telefones = new HashSet<>();
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
+
 	public Cliente() {
-		
+
 	}
-	
-	public Cliente(Long id, String nome_usuario, String nome_completo, String email, String senha, String cpf,
-			LocalDate data_nasc, String telefone) {
-		
+
+	public Cliente(Long id, String nome, String email, String cpf, String nome_usuario, String senha,
+			Date data_nasc, List<Pedido> pedidos) {
+		super();
 		this.id = id;
-		this.nome_usuario = nome_usuario;
-		this.nome_completo = nome_completo;
+		this.nome = nome;
 		this.email = email;
-		this.senha = senha;
 		this.cpf = cpf;
+		this.nome_usuario = nome_usuario;
+		this.senha = senha;
 		this.data_nasc = data_nasc;
-		this.telefone = telefone;
+		this.pedidos = pedidos;
+	}
+
+	public List<Endereco> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
+	}
+
+	public Set<String> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(Set<String> telefones) {
+		this.telefones = telefones;
 	}
 
 	public Long getId() {
@@ -84,20 +89,12 @@ public class Cliente {
 		this.id = id;
 	}
 
-	public String getNome_usuario() {
-		return nome_usuario;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setNome_usuario(String nome_usuario) {
-		this.nome_usuario = nome_usuario;
-	}
-
-	public String getNome_completo() {
-		return nome_completo;
-	}
-
-	public void setNome_completo(String nome_completo) {
-		this.nome_completo = nome_completo;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getEmail() {
@@ -108,41 +105,11 @@ public class Cliente {
 		this.email = email;
 	}
 
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public LocalDate getData_nasc() {
-		return data_nasc;
-	}
-
-	public void setData_nasc(LocalDate data_nasc) {
-		this.data_nasc = data_nasc;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
+	
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(cpf, id);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -154,14 +121,48 @@ public class Cliente {
 		if (getClass() != obj.getClass())
 			return false;
 		Cliente other = (Cliente) obj;
-		return Objects.equals(cpf, other.cpf) && Objects.equals(id, other.id);
+		return Objects.equals(id, other.id);
 	}
 
-	@Override
-	public String toString() {
-		return "Cliente [id=" + id + ", nome_usuario=" + nome_usuario + ", nome_completo=" + nome_completo + ", email="
-				+ email + ", senha=" + senha + ", cpf=" + cpf + ", data_nasc=" + data_nasc + ", telefone=" + telefone
-				+ "]";
+	public List<Pedido> getPedidos() {
+		return pedidos;
 	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
+	public String getNome_usuario() {
+		return nome_usuario;
+	}
+
+	public void setNome_usuario(String nome_usuario) {
+		this.nome_usuario = nome_usuario;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public Date getData_nasc() {
+		return data_nasc;
+	}
+
+	public void setData_nasc(Date data_nasc) {
+		this.data_nasc = data_nasc;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
 	
 }
