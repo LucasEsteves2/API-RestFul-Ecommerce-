@@ -31,13 +31,10 @@ public class CategoriaController {
 	}
 	
 	@GetMapping("/{id_categoria}")
-	public ResponseEntity<Categoria> pesquisarPorId(@PathVariable Integer id_categoria){
+	public ResponseEntity<Categoria> pesquisarPorId(@PathVariable Long id_categoria){
 		Categoria categoria = CategoriaService.pegar(id_categoria);
-		if(null != categoria) {
 			return ResponseEntity.ok(categoria);
 		}
-		return ResponseEntity.notFound().build();
-	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -47,13 +44,13 @@ public class CategoriaController {
 	}
 	
 	@PutMapping("/{id_categoria}")
-    public ResponseEntity<Categoria> atualizar(@PathVariable Integer id_categoria, @RequestBody Categoria categoriaConsulta){
+    public ResponseEntity<Categoria> atualizar(@PathVariable Long id_categoria, @RequestBody Categoria categoriaConsulta){
 		Categoria categoria = CategoriaService.atualizarPeloId(id_categoria, categoriaConsulta );
         return ResponseEntity.ok(categoria);
       
     }
 	@DeleteMapping("{id_categoria}")
-	public ResponseEntity<Void> deletar(@PathVariable Integer id_categoria){
+	public ResponseEntity<Void> deletar(@PathVariable Long id_categoria){
 		CategoriaService.deletarPorId(id_categoria);
 		return ResponseEntity.noContent().build();
 	}

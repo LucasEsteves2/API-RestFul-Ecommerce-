@@ -20,16 +20,14 @@ public class Categoria {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_categoria;
+    private Long id_categoria;
     
     @NotBlank
-    @Size(max=30)
-    @Column(name = "nome",  length = 30, nullable = true)
+    @Column(name = "nome", nullable = true)
     private String nome;
     
     @NotBlank
-    @Size(max=150)
-    @Column(name = "descricao",  length = 150, nullable = true)
+    @Column(name = "descricao", nullable = true)
     private String descricao;
     
     @OneToMany (mappedBy = "categoria")
@@ -40,7 +38,7 @@ public class Categoria {
         super();
     }
 
-    public Categoria(Integer id_categoria, @NotBlank @Size(max = 30) String nome,
+    public Categoria(Long id_categoria, @NotBlank @Size(max = 30) String nome,
             @NotBlank @Size(max = 150) String descricao, List<Produto> produto) {
         this.id_categoria = id_categoria;
         this.nome = nome;
@@ -48,11 +46,11 @@ public class Categoria {
         this.produto = produto;
     }
     
-    public Integer getId_categoria() {
+    public Long getId_categoria() {
         return id_categoria;
     }
 
-    public void setId_categoria(Integer id_categoria) {
+    public void setId_categoria(Long id_categoria) {
         this.id_categoria = id_categoria;
     }
 
