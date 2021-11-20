@@ -1,12 +1,16 @@
 package org.serratec.ecommerce.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.net.URI;
+
+import javax.validation.Valid;
+
+import org.serratec.ecommerce.dto.ClienteDTO;
+import org.serratec.ecommerce.dto.ClienteNewDTO;
 import org.serratec.ecommerce.entity.Cliente;
 import org.serratec.ecommerce.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,50 +18,58 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping(value = ("/clientes"))
 public class ClienteController {
-	
+
 	@Autowired
-	public ClienteService clienteService;
+	ClienteService service;
 
-	private static List<Cliente> listaClientes = new ArrayList<>();
+	@ApiOperation(value="Busca por ID")
+	@GetMapping("{id}")
+	public ResponseEntity<?> listar(@PathVariable Long id) {
+		Cliente obj = service.listar(id);
 
+		return ResponseEntity.ok(obj);
 
+	}
+
+	@ApiOperation(value="Remove Cliente")
+	@DeleteMapping(value = ("/{id}"))
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+
+		service.delete(id);
+
+		return ResponseEntity.noContent().build();
+
+	}
+
+	@ApiOperation(value="Insere um novo Cliente")
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public Cliente inserir(@RequestBody Cliente cliente) {
-		clienteService.save(cliente);
-		return cliente;
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
+		Cliente obj = service.fromDTO(objDto);
+		obj = service.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+
+		// retorna o uri eo codigo http
+		return ResponseEntity.created(uri).build();
 	}
 
-	@GetMapping
-	public ResponseEntity<?> lista() {
-		listaClientes = clienteService.findAll();
-		return ResponseEntity.ok(listaClientes);
-	}
+	@ApiOperation(value="Atualiza Cliente")
+	@PutMapping("/{id}")
+	public ResponseEntity<Cliente> update(@Validated @RequestBody ClienteDTO objDto, @PathVariable Long id) {
 
-	@GetMapping("{/id}")
-	public ResponseEntity<Cliente> buscaId(@PathVariable Long id) {
-		ResponseEntity<Cliente> cliente = clienteService.buscaId(id);
-		return cliente;
-		
-	}
+		Cliente obj = service.fromDTO(objDto);
+		obj.setId(id);
+		service.update(obj);
 
-	@PutMapping("{/id}")
-	public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @RequestBody Cliente cliente) {
-        ResponseEntity<Cliente> clienteN = clienteService.buscaId(id);
-        return clienteN;
-		
-	}
-
-	@DeleteMapping("{id}")
-	public ResponseEntity <Void> deletarPorId(@PathVariable Long id){
-		ResponseEntity<Void> deleteCliente = clienteService.deletarPorId(id);
-		return deleteCliente;
+		return ResponseEntity.noContent().build();
 	}
 
 }
