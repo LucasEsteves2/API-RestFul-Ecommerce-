@@ -48,12 +48,25 @@ public class Pedido {
 	}
 
 	public Pedido(Long id, Date instante, Cliente cliente, Endereco enderecoEntegra ) {
+		super();
 		this.id = id;
 		this.data_pedido = instante;
 		this.cliente = cliente;
 		this.enderecoEntegra = enderecoEntegra;
 	
 	}
+	
+	
+	public double getValorTotal()
+	{
+		double soma = 0.0;
+		for (ItemPedido x : itens) {
+			soma+= x.getSubTotal();
+			
+		}
+		return soma;
+	}
+	
 
 	public Long getId() {
 		return id;
@@ -63,9 +76,7 @@ public class Pedido {
 		this.id = id;
 	}
 
-	public Date getInstante() {
-		return data_pedido;
-	}
+	
 
 	public void setInstante(Date instante) {
 		this.data_pedido = instante;
@@ -118,6 +129,14 @@ public class Pedido {
 
 	public void setItens(Set<ItemPedido> itens) {
 		this.itens = itens;
+	}
+
+	public Date getData_pedido() {
+		return data_pedido;
+	}
+
+	public void setData_pedido(Date data_pedido) {
+		this.data_pedido = data_pedido;
 	}
 	
 	
