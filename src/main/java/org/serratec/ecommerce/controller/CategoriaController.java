@@ -45,7 +45,7 @@ public class CategoriaController {
 
 	}
 
-	@ApiOperation(value="Busca uma categoria pelo Id e retorna seus produtos associados")
+	@ApiOperation(value="Busca uma categoriaaaaa pelo Id e retorna seus produtos associados")
 	@GetMapping("/{id}")
 	public ResponseEntity<Categoria> listar(@PathVariable Long id) {
 		Categoria cat = service.buscar(id);
