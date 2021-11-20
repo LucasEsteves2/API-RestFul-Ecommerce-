@@ -48,7 +48,6 @@ public class Pedido {
 	}
 
 	public Pedido(Long id, Date instante, Cliente cliente, Endereco enderecoEntegra ) {
-		super();
 		this.id = id;
 		this.data_pedido = instante;
 		this.cliente = cliente;

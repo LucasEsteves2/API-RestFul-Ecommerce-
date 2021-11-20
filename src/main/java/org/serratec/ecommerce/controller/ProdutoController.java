@@ -40,9 +40,9 @@ public class ProdutoController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Produto> buscar(@PathVariable Long id) {
 
-		Produto cat = service.buscar(id);
+		Produto obj = service.buscar(id);
 
-		return ResponseEntity.ok(cat);
+		return ResponseEntity.ok(obj);
 
 	}
 
@@ -66,7 +66,7 @@ public class ProdutoController {
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
-//a
+
 	@DeleteMapping(value = ("/{id}"))
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 
