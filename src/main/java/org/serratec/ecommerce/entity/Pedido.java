@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -21,31 +23,37 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date data_pedido;
-	
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Date data_entega;
-	
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Date data_envio;
-	private String status;
 
+	
 	@ManyToOne
-	@JoinColumn(name = "id_cliente")
+	@JoinColumn(name="id_cliente")
 	private Cliente cliente;
-
 	
+	@ManyToOne
+	@JoinColumn(name = "id_endereco")
+	private Endereco enderecoEntegra;
+	
+	
+	@OneToOne(cascade = CascadeType.ALL,mappedBy = "pedido")
+	private Pagamento pagamento;
+
 	@OneToMany(mappedBy = "id.pedido")
-	//garantindo que nao se repita
-	Set<ItemPedido> itens = new HashSet<ItemPedido>();
+	private Set<ItemPedido> itens = new HashSet<>();
 	
+	public Pedido()
+	{
+		
+	}
+
+	public Pedido(Long id, Date instante, Cliente cliente, Endereco enderecoEntegra ) {
+		super();
+		this.id = id;
+		this.data_pedido = instante;
+		this.cliente = cliente;
+		this.enderecoEntegra = enderecoEntegra;
 	
-
-
-	public Pedido() {
-
 	}
 
 	public Long getId() {
@@ -56,45 +64,12 @@ public class Pedido {
 		this.id = id;
 	}
 
-	public Set<ItemPedido> getItens() {
-		return itens;
-	}
-
-	public void setItens(Set<ItemPedido> itens) {
-		this.itens = itens;
-	}
-	
-	
-	public Date getData_pedido() {
+	public Date getInstante() {
 		return data_pedido;
 	}
 
-	public void setData_pedido(Date data_pedido) {
-		this.data_pedido = data_pedido;
-	}
-
-	public Date getData_entega() {
-		return data_entega;
-	}
-
-	public void setData_entega(Date data_entega) {
-		this.data_entega = data_entega;
-	}
-
-	public Date getData_envio() {
-		return data_envio;
-	}
-
-	public void setData_envio(Date data_envio) {
-		this.data_envio = data_envio;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
+	public void setInstante(Date instante) {
+		this.data_pedido = instante;
 	}
 
 	public Cliente getCliente() {
@@ -103,6 +78,22 @@ public class Pedido {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public Endereco getEnderecoEntegra() {
+		return enderecoEntegra;
+	}
+
+	public void setEnderecoEntegra(Endereco enderecoEntegra) {
+		this.enderecoEntegra = enderecoEntegra;
+	}
+
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
+
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
 	}
 
 	@Override
@@ -122,4 +113,15 @@ public class Pedido {
 		return Objects.equals(id, other.id);
 	}
 
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
+	
+	
+	
+	
 }
