@@ -1,6 +1,5 @@
 package org.serratec.ecommerce.services;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -13,53 +12,59 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+@Service
+public class CategoriaService {
 
-	@Service
-	public class CategoriaService {
-	    @Autowired
-	    private CategoriaRepository CategoriaRepository;
-	    
-	    // GET - BUSCAR TODOS
-	    public List<Categoria> listartodos(){
-			return CategoriaRepository.findAll();
-		}
-	    
-	    //GET - PEGAR POR ID
-	    public Categoria pegar(Long id_categoria) {
-	    	Optional<Categoria> categoria =  CategoriaRepository.findById(id_categoria);
-	    	
-	    	// Lançando exception
-			return categoria.orElseThrow(() -> new ObjectNotFoundException(
-					"Objeto não encontrado! Id: " + id_categoria + ", Tipo: " + Categoria.class.getName()));
-	    }
-	    
-	    //POST - ADICIONAR
-	    public Categoria inserir(Categoria categoria){
-			CategoriaRepository.save(categoria);
-			return categoria;
-		}
-	    
-	    //PUT - TROCAR POR ID
-	    public Categoria atualizarPeloId(Long id_categoria, Categoria categoriaConsulta){
-	    	Categoria categoria = pegar(id_categoria);
-	        categoria.setNome(categoriaConsulta.getNome());
-	        categoria.setDescricao(categoriaConsulta.getDescricao());
-	        return CategoriaRepository.save(categoria);
-	    }
+	@Autowired
+	CategoriaRepository repo;
 
-	    //DELETE - DELETAR
-	    public void deletarPorId( Long id_categoria){
-	    	pegar(id_categoria);
-	    	try {
-	     CategoriaRepository.deleteById(id_categoria);
-	    	} catch (DataIntegrityViolationException e) {
-				throw new DataIntegrityException("Não é possivel excluir uma categoria que possua produtos!! ");
-			}	   
-	    	
-	    }
-	 // Converte o DTO em Objeto
-		public Categoria fromDTO(CategoriaDTO objDTO) {
-			return new Categoria(objDTO.getId_cadastro(), objDTO.getNome(), objDTO.getDescricao(), null);
+	public List<Categoria> categorias() {
+		return repo.findAll();
+	}
+
+	public Categoria buscar(Long id) {
+		Optional<Categoria> obj = repo.findById(id);
+
+		// lançando exception
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+
+	}
+
+	public Categoria insert(Categoria obj) {
+		obj.setId(null);
+		return repo.save(obj);
+
+	}
+
+	public Categoria update(Categoria obj) {
+		Categoria novoObj = buscar(obj.getId());
+
+		// atualiza somente os campos nome e-email
+		upddateData(novoObj, obj);
+
+		return repo.save(novoObj);
+	}
+
+	public void delete(Long id) {
+		buscar(id);
+		try {
+			repo.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel excluir uma categoria que possui produtos ");
 
 		}
+
+	}
+
+	public Categoria fromDTO(CategoriaDTO objDto) {
+		return new Categoria(objDto.getId(), objDto.getNome(), objDto.getDescricao());
+	}
+
+	private void upddateData(Categoria novoObj, Categoria obj) {
+		novoObj.setNome(obj.getNome());
+		novoObj.setDescricao(obj.getDescricao());
+
+	}
+
 }

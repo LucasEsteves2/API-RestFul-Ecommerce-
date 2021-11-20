@@ -1,40 +1,59 @@
 package org.serratec.ecommerce.entity;
 
-import java.util.Objects;
+import java.io.Serializable;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class ItemPedido {
-
+public class ItemPedido implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	@JsonIgnore
 	@EmbeddedId
 	private ItemPedidoPk id = new ItemPedidoPk();
+	
+	private Double desconto;
+	private Integer quantidade;
+	private Double preco;
 
-	private String preco_venda;
-	private String quantidade;
-
+	
+	
 	public ItemPedido() {
-
 	}
 
-	public ItemPedido(Pedido pedido, Produto produto, String preco_venda, String quantidade) {
+	public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
+		super();
 		id.setPedido(pedido);
 		id.setProduto(produto);
-		this.preco_venda = preco_venda;
+		this.desconto = desconto;
 		this.quantidade = quantidade;
+		this.preco = preco;
 	}
+
+	public double getSubTotal() {
+		return (preco - desconto) * quantidade;
+	}
+	
 	@JsonIgnore
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
-
+	
+	public void setPedido(Pedido pedido) {
+		id.setPedido(pedido);
+	}
+	
 	public Produto getProduto() {
 		return id.getProduto();
 	}
-
+	
+	public void setProduto(Produto produto) {
+		id.setProduto(produto);
+	}
+	
 	public ItemPedidoPk getId() {
 		return id;
 	}
@@ -43,25 +62,36 @@ public class ItemPedido {
 		this.id = id;
 	}
 
-	public String getPreco_venda() {
-		return preco_venda;
+	public Double getDesconto() {
+		return desconto;
 	}
 
-	public void setPreco_venda(String preco_venda) {
-		this.preco_venda = preco_venda;
+	public void setDesconto(Double desconto) {
+		this.desconto = desconto;
 	}
 
-	public String getQuantidade() {
+	public Integer getQuantidade() {
 		return quantidade;
 	}
 
-	public void setQuantidade(String quantidade) {
+	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public Double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Double preco) {
+		this.preco = preco;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
 	@Override
@@ -73,7 +103,12 @@ public class ItemPedido {
 		if (getClass() != obj.getClass())
 			return false;
 		ItemPedido other = (ItemPedido) obj;
-		return Objects.equals(id, other.id);
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
-
+	
 }
