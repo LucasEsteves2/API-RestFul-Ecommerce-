@@ -1,5 +1,6 @@
 package org.serratec.ecommerce.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.serratec.ecommerce.entity.Endereco;
@@ -14,10 +15,20 @@ public class EnderecoService {
 	@Autowired
 	private EnderecoRepository repo;
 
-	public Endereco listar(Long id) {
+	public Endereco buscar(Long id) {
 		Optional<Endereco> obj = repo.findById(id);
 
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto Não Encontrado"));
+
+	}
+
+	public List<Endereco> findAll() {
+		return repo.findAll();
+	}
+
+	public List<Endereco> findCidade(String cidade) {
+
+		return repo.findByCidade(cidade);
 
 	}
 

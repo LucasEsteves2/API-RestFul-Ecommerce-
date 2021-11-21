@@ -1,5 +1,6 @@
 package org.serratec.ecommerce.services;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,12 +13,15 @@ import org.serratec.ecommerce.entity.Cliente;
 import org.serratec.ecommerce.entity.Endereco;
 import org.serratec.ecommerce.repositories.ClienteRepository;
 import org.serratec.ecommerce.repositories.EnderecoRepository;
+import org.serratec.ecommerce.security.UserSS;
+import org.serratec.ecommerce.services.exceptions.AuthorizationException;
 import org.serratec.ecommerce.services.exceptions.DataIntegrityException;
 import org.serratec.ecommerce.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ClienteService {
@@ -28,9 +32,9 @@ public class ClienteService {
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
-	
 
+	@Autowired
+	private S3Service s3Service;
 
 	public Cliente listar(Long id) {
 		Optional<Cliente> obj = repo.findById(id);
@@ -122,9 +126,28 @@ public class ClienteService {
 		return listaDTO;
 
 	}
-	
+
 	public Long count() {
 		return repo.count();
+	}
+
+	public URI fotoProduto(MultipartFile multi) {
+
+	
+
+		UserSS user = UserService.authenticated();
+		if (user == null) throw new AuthorizationException("Acesso negado!");
+		
+
+	
+		URI uri = s3Service.uploadFile(multi);
+		Cliente cli = buscar(user.getId());
+		cli.setUrlFotoPerfil(uri.toString());
+
+		repo.save(cli);
+
+		return uri;
+	
 	}
 
 }

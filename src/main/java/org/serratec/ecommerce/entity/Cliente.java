@@ -35,7 +35,9 @@ public class Cliente implements Serializable {
 	private String nome_usuario;
 	private String senha;
 	private Date data_nasc;
-
+	private String urlFotoPerfil;
+	
+	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 
@@ -162,6 +164,14 @@ public class Cliente implements Serializable {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+
+	public String getUrlFotoPerfil() {
+		return urlFotoPerfil;
+	}
+
+	public void setUrlFotoPerfil(String urlFotoPerfil) {
+		this.urlFotoPerfil = urlFotoPerfil;
 	}
 
 	
