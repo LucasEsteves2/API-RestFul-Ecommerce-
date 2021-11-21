@@ -67,4 +67,14 @@ public class CategoriaService {
 
 	}
 
+	public Categoria buscarNome(String nome) {
+		Categoria obj = repo.findByNome(nome);
+
+		if (obj != null) {
+			return obj;
+		} else {
+			throw new ObjectNotFoundException(
+					"Categoria não encontrada! Nome: " + nome + ", Tipo: " + Categoria.class.getName());
+		}
+	}
 }

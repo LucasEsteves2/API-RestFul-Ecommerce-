@@ -10,7 +10,7 @@ public class CategoriaDTO implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	
+	private String banana;
 	
 	@NotEmpty(message = "Preenchimento obrigatorio")
 	@Length(min=5, max=80, message="O Tamanho do nome deve ser entre 5 e 80 caracteres")

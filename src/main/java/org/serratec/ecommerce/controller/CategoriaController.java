@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.serratec.ecommerce.dto.CategoriaDTO;
 import org.serratec.ecommerce.entity.Categoria;
+import org.serratec.ecommerce.entity.Produto;
 import org.serratec.ecommerce.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -33,7 +35,7 @@ public class CategoriaController {
 	@Autowired
 	CategoriaService service;
 
-	@ApiOperation(value="Retorna todas as Categorias")
+	@ApiOperation(value="Retorna uma lista com todas as Categorias")
 	@GetMapping()
 	public ResponseEntity<List<CategoriaDTO>> categorias() {
 
@@ -45,13 +47,25 @@ public class CategoriaController {
 
 	}
 
-	@ApiOperation(value="Busca uma categoriaaaaa pelo Id e retorna seus produtos associados")
+	@ApiOperation(value="Busca categoria pelo Id e retorna seus produtos")
 	@GetMapping("/{id}")
 	public ResponseEntity<Categoria> listar(@PathVariable Long id) {
 		Categoria cat = service.buscar(id);
 		return ResponseEntity.ok(cat);
 
 	}
+	
+
+	@ApiOperation(value = "Busca Categoria pelo Nome e retorna seus produtos")
+	@GetMapping(value = "/nome")
+	public ResponseEntity<Categoria> buscarNome(@RequestParam(value = "value") String nome) {
+		Categoria obj = service.buscarNome(nome);
+		return ResponseEntity.ok(obj);
+
+	}
+	
+	
+	
 	@ApiOperation(value="Remove Categoria")
 	@ApiResponses(value = {
 			@ApiResponse(code = 400, message = "Não é possível excluir uma categoria que possui produtos"),

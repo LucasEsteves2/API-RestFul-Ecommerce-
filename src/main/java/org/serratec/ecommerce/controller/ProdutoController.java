@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
@@ -47,12 +49,11 @@ public class ProdutoController {
 		return ResponseEntity.ok(obj);
 
 	}
-	
+
+	@ApiOperation(value = "Busca um produto pelo Nome")
 	@GetMapping(value = "/nome")
-	public ResponseEntity<Produto> buscarNome(@RequestParam(value ="value") String nome) {
-
+	public ResponseEntity<Produto> buscarNome(@RequestParam(value = "value") String nome) {
 		Produto obj = service.findByNome(nome);
-
 		return ResponseEntity.ok(obj);
 
 	}
@@ -87,6 +88,7 @@ public class ProdutoController {
 
 	}
 
+	@ApiOperation(value = "Adiciona uma imagem no banco da Amazon")
 	@PostMapping(value = "/imagem")
 	public ResponseEntity<Produto> foto(@RequestParam(name = "file") MultipartFile file) {
 		URI uri = service.fotoProduto(file);
