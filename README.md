@@ -29,14 +29,14 @@
 <details>
   <summary>✔️ Funcionalidades:</summary>
       <p align="justify">
-      1:  Cadastrar Cliente<br>
-      2:  Atualizar Cliente<br>
-      3:  Deletar Cliente<br>
-      4:  Cadastrar Produto<br>
-      5:  Atualizar Produto<br>
-      6:  Deletar Produto<br>
-      7:  Realizar um novo Pedido<br>
-      8:  Atualizar Pedido<br>
+      1:  CRUD Cliente<br>
+      2:  CRUD Produto <br>
+      3:  CRUD PEDIDO<br>
+      4:  CRUD ENDERECO<br>
+      5:  Pesquisas personalizadas<br>
+      6:  Pesquisas por paginação<br>
+      7:  Armazenamento de fotos utilizando o AMAZON S3<br>
+      8:  Pagamento com cartao <br>
       9:  Escolher opção de pagamento<br>
      10: Desconto por pedido<br>
   </details>
@@ -44,11 +44,11 @@
   <details>
   <summary>👨‍💼 Regras de negocio:</summary>
       <p align="justify">
-      1:  Uma Categoria Possui varios produtos<br>
-      2:  Cliente pode possuir varios telefones<br>
-      3:  Um Produto pertence somente a uma categoria<br>
-      4:  Cliente deve possuir pelo menos 1<br>
-      5:  Atualizar Produto<br>
+      1:  Categoria possui varios produtos <br>
+      2:  Produto pertence somente a uma categoria <br>
+      3:  Cliente deve possuir OBRIGATORIAMENTE UM CELULAR<br>
+      4:  Cliente deve possuir OBRIGATORIAMENTE UM ENDEREÇO<br>
+      5:  Clietne  <br>
       6:  Deletar Produto<br>
       7:  Realizar um novo Pedido<br>
       8:  Atualizar Pedido<br>
