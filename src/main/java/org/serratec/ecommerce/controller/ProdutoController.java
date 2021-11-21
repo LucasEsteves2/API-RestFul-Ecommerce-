@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
@@ -73,6 +75,14 @@ public class ProdutoController {
 		service.delete(id);
 
 		return ResponseEntity.noContent().build();
+
+	}
+
+	@PostMapping(value = "/imagem")
+	public ResponseEntity<Produto> foto(@RequestParam(name = "file") MultipartFile file) {
+		URI uri = service.fotoProduto(file);
+		// retorna o uri eo codigo http
+		return ResponseEntity.created(uri).build();
 
 	}
 

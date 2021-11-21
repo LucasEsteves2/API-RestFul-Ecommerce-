@@ -5,6 +5,9 @@ public class StandardError {
 	private Integer status;
 	private String msg;
 	private Long TimeStamp;
+	private String error;
+	private String message;
+	private String path;
 
 	public StandardError(Integer status, String msg, Long timeStamp) {
 		super();
@@ -13,6 +16,16 @@ public class StandardError {
 		TimeStamp = timeStamp;
 	}
 
+	public StandardError(Long timeStamp, Integer status, String error, String message, String path) {
+		super();
+		this.TimeStamp = timeStamp;
+		this.status = status;
+		this.error = error;
+		this.message = message;
+		this.path = path;
+	}
+	
+	
 	public Integer getStatus() {
 		return status;
 	}

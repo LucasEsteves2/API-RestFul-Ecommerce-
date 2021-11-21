@@ -1,5 +1,6 @@
 package org.serratec.ecommerce.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ProdutoService {
@@ -23,6 +25,13 @@ public class ProdutoService {
 	
 	@Autowired
 	CategoriaService serviceCategoria;
+	
+	
+	@Autowired
+	private S3Service s3service;
+	
+	
+	
 	
 	public List<Produto> listar() {
 		return repo.findAll();
@@ -82,7 +91,10 @@ public class ProdutoService {
 	
 	
 	
-	
+	public URI fotoProduto(MultipartFile  multi)
+	{
+		return s3service.uploadFile(multi);
+	}
 	
 	
 	
