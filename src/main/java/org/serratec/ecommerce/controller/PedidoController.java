@@ -1,11 +1,14 @@
 package org.serratec.ecommerce.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.validation.Valid;
 
+import org.serratec.ecommerce.dto.ProdutoDTO;
 import org.serratec.ecommerce.entity.Cliente;
 import org.serratec.ecommerce.entity.Pedido;
+import org.serratec.ecommerce.entity.Produto;
 import org.serratec.ecommerce.entity.Pedido;
 import org.serratec.ecommerce.services.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +33,15 @@ public class PedidoController {
 
 	@Autowired
 	PedidoService service;
+
+	@ApiOperation(value = "Retorna uma lista com todos os Pedidos")
+	@GetMapping
+	public ResponseEntity<?> listarProdutos() {
+		List<Pedido> list = service.findAll();
+
+		return ResponseEntity.ok(list);
+
+	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Pedido> listar(@PathVariable Long id) {
@@ -49,7 +62,6 @@ public class PedidoController {
 
 	}
 
-	
 	@DeleteMapping(value = ("/{id}"))
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 
@@ -58,7 +70,7 @@ public class PedidoController {
 		return ResponseEntity.noContent().build();
 
 	}
-	
+
 	@ApiOperation(value = "Retorna a quantidade de Pedidos")
 	@GetMapping("/count")
 
@@ -68,7 +80,4 @@ public class PedidoController {
 
 	}
 
-	
-
-	
 }

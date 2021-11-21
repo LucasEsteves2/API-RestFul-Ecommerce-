@@ -1,6 +1,7 @@
 package org.serratec.ecommerce.services;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -36,6 +37,10 @@ public class PedidoService {
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 	
+	public List<Pedido> findAll()
+	{
+		return repo.findAll();
+	}
 	
 
 	public Pedido listar(Long id) {
@@ -46,6 +51,8 @@ public class PedidoService {
 
 	@Transactional
 	public Pedido insert(Pedido obj) {
+		
+		
 		obj.setId(null);
 		obj.setInstante(new Date());
 		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
