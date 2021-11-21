@@ -31,7 +31,7 @@ public class ProdutoController {
 	@Autowired
 	ProdutoService service;
 
-	// LISTA TODOS OS PRODUTOS SEM SEUS PEDIDOS
+	@ApiOperation(value = "Retorna uma lista com todos os Produtos")
 	@GetMapping
 	public ResponseEntity<?> listarProdutos() {
 		List<Produto> list = service.listar();
@@ -40,7 +40,7 @@ public class ProdutoController {
 
 	}
 
-	// LISTA PRODUTO POR ID
+	@ApiOperation(value = "Busca por ID")
 	@GetMapping("/{id}")
 	public ResponseEntity<Produto> buscar(@PathVariable Long id) {
 
@@ -58,6 +58,7 @@ public class ProdutoController {
 
 	}
 
+	@ApiOperation(value = "Insere um novo Produto")
 	@PostMapping()
 	public ResponseEntity<Produto> insert(@Valid @RequestBody ProdutoDTO objDto) {
 		// convertendo o dto em uma classe
@@ -71,6 +72,7 @@ public class ProdutoController {
 
 	}
 
+	@ApiOperation(value = "Atualiza Produto ")
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Produto> update(@RequestBody ProdutoDTO objDto, @PathVariable Long id) {
 		Produto obj = service.fromDTO(objDto);
@@ -79,6 +81,7 @@ public class ProdutoController {
 		return ResponseEntity.noContent().build();
 	}
 
+	@ApiOperation(value = "Remove Produto")
 	@DeleteMapping(value = ("/{id}"))
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 
@@ -88,12 +91,21 @@ public class ProdutoController {
 
 	}
 
-	@ApiOperation(value = "Adiciona uma imagem no banco da Amazon")
+	@ApiOperation(value = "Adiciona imagens no servidor Amazon S3(bucket privado)")
 	@PostMapping(value = "/imagem")
 	public ResponseEntity<Produto> foto(@RequestParam(name = "file") MultipartFile file) {
 		URI uri = service.fotoProduto(file);
 		// retorna o uri eo codigo http
 		return ResponseEntity.created(uri).build();
+
+	}
+
+	@ApiOperation(value = "Retorna a quantidade de produtos")
+	@GetMapping("/count")
+
+	public ResponseEntity<?> count() {
+
+		return ResponseEntity.ok(service.count());
 
 	}
 

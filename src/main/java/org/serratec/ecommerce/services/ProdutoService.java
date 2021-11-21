@@ -22,17 +22,12 @@ public class ProdutoService {
 	@Autowired
 	ProdutoRepository repo;
 
-	
 	@Autowired
 	CategoriaService serviceCategoria;
-	
-	
+
 	@Autowired
 	private S3Service s3service;
-	
-	
-	
-	
+
 	public List<Produto> listar() {
 		return repo.findAll();
 	}
@@ -69,37 +64,30 @@ public class ProdutoService {
 
 	// converte o dto em objt
 	public Produto fromDTO(ProdutoDTO objDto) {
-		
-		
-		Categoria cat=serviceCategoria.buscar(objDto.getIdCategoria());
 
-		
-		
-		return new Produto(null, objDto.getNome(), objDto.getValor(), objDto.getDescricao(),
-				objDto.getQtd_estoque(), objDto.getData_cadastro(), cat, null);
+		Categoria cat = serviceCategoria.buscar(objDto.getIdCategoria());
 
-		
+		return new Produto(null, objDto.getNome(), objDto.getValor(), objDto.getDescricao(), objDto.getQtd_estoque(),
+				objDto.getData_cadastro(), cat, null);
+
 	}
-	
-	
-	public Page<Produto> search(String nome,List <Long> ids, Integer page, Integer linesPerPage, String orderBy, String direction)
-	{
+
+	public Page<Produto> search(String nome, List<Long> ids, Integer page, Integer linesPerPage, String orderBy,
+			String direction) {
 		return null;
-		//PageRequest pageRequest = new PageRequest
+		// PageRequest pageRequest = new PageRequest
 	}
-	
-	
-	
-	
-	public URI fotoProduto(MultipartFile  multi)
-	{
+
+	public URI fotoProduto(MultipartFile multi) {
 		return s3service.uploadFile(multi);
 	}
-	
-	
-	public Produto findByNome(String nome)
-	{
+
+	public Produto findByNome(String nome) {
 		return repo.findByNome(nome);
 	}
-	
+
+	public Long count() {
+		return repo.count();
+	}
+
 }

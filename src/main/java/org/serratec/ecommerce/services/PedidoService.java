@@ -12,7 +12,10 @@ import org.serratec.ecommerce.entity.enums.EstadoPagamento;
 import org.serratec.ecommerce.repositories.ItemPedidoRepository;
 import org.serratec.ecommerce.repositories.PagamentoRepository;
 import org.serratec.ecommerce.repositories.PedidoRepository;
+import org.serratec.ecommerce.services.exceptions.DataIntegrityException;
+import org.serratec.ecommerce.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,9 +37,11 @@ public class PedidoService {
 	private ItemPedidoRepository itemPedidoRepository;
 	
 	
+
 	public Pedido listar(Long id) {
-		Optional<Pedido> cat = repo.findById(id);
-		return cat.orElse(null);
+		Optional<Pedido> obj = repo.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 
 	@Transactional
@@ -60,4 +65,20 @@ public class PedidoService {
 		return obj;
 	}
 
+	
+	public void delete(Long id) {
+		listar(id);
+		try {
+			repo.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel excluir um pedido que ja tenha sido VALIDADO(REGRA DE NEGOCIo)!! ");
+
+		}
+
+	}
+	
+	public Long count() {
+		return repo.count();
+	}
+	
 }

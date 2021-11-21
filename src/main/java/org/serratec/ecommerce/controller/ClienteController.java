@@ -32,7 +32,7 @@ public class ClienteController {
 
 	@Autowired
 	ClienteService service;
-	
+
 	@ApiOperation(value = "Retorna uma Lista de clientes")
 	@GetMapping
 	public ResponseEntity<?> listarProdutos() {
@@ -81,6 +81,15 @@ public class ClienteController {
 		service.update(obj);
 
 		return ResponseEntity.noContent().build();
+	}
+
+	@ApiOperation(value = "Retorna a quantidade de Clientes cadastrados")
+	@GetMapping("/count")
+
+	public ResponseEntity<?> count() {
+
+		return ResponseEntity.ok(service.count());
+
 	}
 
 }

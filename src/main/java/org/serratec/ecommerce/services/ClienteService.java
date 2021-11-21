@@ -122,5 +122,9 @@ public class ClienteService {
 		return listaDTO;
 
 	}
+	
+	public Long count() {
+		return repo.count();
+	}
 
 }
