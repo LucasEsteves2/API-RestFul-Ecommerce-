@@ -97,5 +97,9 @@ public class ProdutoService {
 	}
 	
 	
+	public Produto findByNome(String nome)
+	{
+		return repo.findByNome(nome);
+	}
 	
 }

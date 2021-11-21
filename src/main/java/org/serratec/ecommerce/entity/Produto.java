@@ -34,6 +34,7 @@ public class Produto implements Serializable {
 	private Integer qtd_estoque;
 	private Date data_cadastro;
 	
+	private String urlImagem;
 
 	@JsonIgnore
 	@ManyToOne()
@@ -167,6 +168,14 @@ public class Produto implements Serializable {
 
 	public void setData_cadastro(Date data_cadastro) {
 		this.data_cadastro = data_cadastro;
+	}
+
+	public String getUrlImagem() {
+		return urlImagem;
+	}
+
+	public void setUrlImagem(String urlImagem) {
+		this.urlImagem = urlImagem;
 	}
 
 }

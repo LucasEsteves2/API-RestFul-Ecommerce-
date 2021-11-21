@@ -47,6 +47,15 @@ public class ProdutoController {
 		return ResponseEntity.ok(obj);
 
 	}
+	
+	@GetMapping(value = "/nome")
+	public ResponseEntity<Produto> buscarNome(@RequestParam(value ="value") String nome) {
+
+		Produto obj = service.findByNome(nome);
+
+		return ResponseEntity.ok(obj);
+
+	}
 
 	@PostMapping()
 	public ResponseEntity<Produto> insert(@Valid @RequestBody ProdutoDTO objDto) {
