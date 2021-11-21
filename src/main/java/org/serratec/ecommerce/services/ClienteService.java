@@ -16,16 +16,21 @@ import org.serratec.ecommerce.services.exceptions.DataIntegrityException;
 import org.serratec.ecommerce.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ClienteService {
-
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	@Autowired
 	private ClienteRepository repo;
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	
+
 
 	public Cliente listar(Long id) {
 		Optional<Cliente> obj = repo.findById(id);
@@ -79,7 +84,7 @@ public class ClienteService {
 	public Cliente fromDTO(ClienteNewDTO objDto) {
 
 		Cliente cliente = new Cliente(null, objDto.getNome(), objDto.getEmail(), objDto.getCpf(),
-				objDto.getNome_usuario(), objDto.getSenha(), objDto.getData_nasc(), null);
+				objDto.getNome_usuario(), pe.encode(objDto.getSenha()), objDto.getData_nasc(), null);
 		Endereco endereco = new Endereco(null, objDto.getRua(), objDto.getComplemento(), objDto.getBairro(),
 				objDto.getCep(), objDto.getNumero(), cliente, objDto.getCidade());
 
