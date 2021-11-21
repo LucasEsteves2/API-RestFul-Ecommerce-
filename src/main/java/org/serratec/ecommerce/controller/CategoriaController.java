@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.serratec.ecommerce.dto.CategoriaAllDTO;
 import org.serratec.ecommerce.dto.CategoriaDTO;
 import org.serratec.ecommerce.entity.Categoria;
-import org.serratec.ecommerce.entity.Produto;
 import org.serratec.ecommerce.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,12 +37,12 @@ public class CategoriaController {
 
 	@ApiOperation(value="Retorna uma lista com todas as Categorias")
 	@GetMapping()
-	public ResponseEntity<List<CategoriaDTO>> categorias() {
+	public ResponseEntity<List<CategoriaAllDTO>> categorias() {
 
 		// pegando todas as categorias
 		List<Categoria> list = service.categorias();
 		// atribuindo com lambda (poderia usar uma foreach
-		List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		List<CategoriaAllDTO> listDto = list.stream().map(obj -> new CategoriaAllDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok(listDto);
 
 	}

@@ -8,11 +8,13 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.serratec.ecommerce.entity.Categoria;
 import org.serratec.ecommerce.entity.Produto;
-public class ProdutoDTO implements Serializable {
+public class ProdutoGetDTO implements Serializable {
 	
 	
 	private static final long serialVersionUID = 1L;
-
+	private Long id;
+	
+	
 
 	@Length(min=5, max=80, message="O Tamanho do nome deve ser entre 5 e 80 caracteres")
 	private String nome;
@@ -30,12 +32,13 @@ public class ProdutoDTO implements Serializable {
 	
 	
 	
-	public ProdutoDTO()
+	public ProdutoGetDTO()
 	{
 		
 	}
-	public ProdutoDTO(Produto obj)
+	public ProdutoGetDTO(Produto obj)
 	{
+		setId(obj.getId());
 		nome=obj.getNome();
 		descricao= obj.getDesc();
 		
@@ -89,7 +92,12 @@ public class ProdutoDTO implements Serializable {
 	public void setData_cadastro(Date data_cadastro) {
 		this.data_cadastro = data_cadastro;
 	}
-
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public Long getIdCategoria() {
 		return idCategoria;
 	}

@@ -75,7 +75,7 @@ public class ProdutoService {
 
 		
 		
-		return new Produto(objDto.getId(), objDto.getNome(), objDto.getValor(), objDto.getDescricao(),
+		return new Produto(null, objDto.getNome(), objDto.getValor(), objDto.getDescricao(),
 				objDto.getQtd_estoque(), objDto.getData_cadastro(), cat, null);
 
 		

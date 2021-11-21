@@ -58,7 +58,7 @@ public class CategoriaService {
 	}
 
 	public Categoria fromDTO(CategoriaDTO objDto) {
-		return new Categoria(objDto.getId(), objDto.getNome(), objDto.getDescricao());
+		return new Categoria(null, objDto.getNome(), objDto.getDescricao());
 	}
 
 	private void upddateData(Categoria novoObj, Categoria obj) {

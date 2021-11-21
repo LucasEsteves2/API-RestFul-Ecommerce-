@@ -5,11 +5,12 @@ import java.io.Serializable;
 import org.hibernate.validator.constraints.Length;
 import org.serratec.ecommerce.entity.Categoria;
 import javax.validation.constraints.NotEmpty;
-public class CategoriaDTO implements Serializable {
+public class CategoriaAllDTO implements Serializable {
 	
 	
 	private static final long serialVersionUID = 1L;
 	
+	private Long id;
 	
 	@NotEmpty(message = "Preenchimento obrigatorio")
 	@Length(min=5, max=80, message="O Tamanho do nome deve ser entre 5 e 80 caracteres")
@@ -17,13 +18,14 @@ public class CategoriaDTO implements Serializable {
 	@Length(min=4, max=80, message="O Tamanho da Descrição deve ser entre 4 e 100 caracteres")
 	private String descricao;
 	
-	public CategoriaDTO()
+	public CategoriaAllDTO()
 	{
 		
 	}
 	
-	public CategoriaDTO(Categoria obj)
+	public CategoriaAllDTO(Categoria obj)
 	{
+		this.setId(obj.getId());
 		nome=obj.getNome();
 		descricao= obj.getDescricao();
 		
@@ -46,6 +48,14 @@ public class CategoriaDTO implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	
