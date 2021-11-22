@@ -1,5 +1,6 @@
 <div align="center">
 <i><h6> API-RESTFUL. [SERRATEC]
+  
 </div>
 <a name="back-to-top">
 
@@ -39,6 +40,11 @@
       8:  Pagamento com cartao <br>
       9:  Escolher opção de pagamento<br>
      10: Desconto por pedido<br>
+     11: Validação de cpf<br>
+     12: Validação de E-mail<br>
+     13: Exceptions Personalizadas<br>
+     14: Codigos de retorno no padrão do http<br>
+      
   </details>
   
   <details>
@@ -49,22 +55,47 @@
       3:  Cliente deve possuir OBRIGATORIAMENTE UM CELULAR<br>
       4:  Cliente deve possuir OBRIGATORIAMENTE UM ENDEREÇO<br>
       5:  Clietne  <br>
-      6:  Deletar Produto<br>
-      7:  Realizar um novo Pedido<br>
-      8:  Atualizar Pedido<br>
-      9:  Escolher opção de pagamento<br>
-     10: Desconto por pedido<br>
   </details>
+<BR>
+
+
+### 📖Se o Usuario estiver logado ele poderá:
+- Adicionar foto (FOTO DE PERFIL)
+- Visualizar todos os endereços cadastrados pelo id ou pela cidade.<br> 
+- Visualizar todos os clientes (todas informações).<br> 
+- Buscar cliente por CPF.<br> 
+
+<BR>
+
+
+⚠️🔃**UTILIZAR O SEGUINTE MODELO PARA INSERIR UM NOVO PEDIDO <br><br> 
+{
+ "cliente" : {"id" : 1},
+ "enderecoDeEntrega" : {"id" : 1},
+ "pagamento" : {
+ "numeroDeParcelas" : 10,
+ "@type": "pagamentoComCartao"
+ },
+ "itens" : [
+ {
+ "quantidade" : 2,
+ "produto" : {"id" : 3}
+ },
+ {
+ "quantidade" : 1,
+ "produto" : {"id" : 1}
+ }
+ ]
+}
+
+
 
 <br>
 <details>
 <summary>Diagrama ER</summary>
 <img align="center" src="assets/Class Diagrama.jpg">
 </details>
-<details>
-<summary>Legenda Cardinalidade</summary>
-<img align="center" height="400px" src="assets/cardinalidade.jpeg">
-</details>
+
 <br>
      
 
@@ -77,7 +108,9 @@
 - [**Postman**](https://www.postman.com/downloads/)    [(*Documentação*)](https://learning.postman.com/docs/getting-started/introduction/)
 - [**Spring Boot**](https://spring.io/)    [(*Documentação*)](https://spring.io/projects/spring-boot)
 - [**Spring Tools 4**](https://spring.io/tools)    [(*Documentação*)](https://github.com/spring-projects/sts4/wiki)
-- [**Swagger**](https://swagger.io/)    [(*Documentação*)](https://swagger.io/solutions/api-documentation/)      
+- [**Swagger**](https://swagger.io/)    [(*Documentação*)](https://swagger.io/solutions/api-documentation/) 
+- [**AWS**](https://swagger.io/)    [(*Documentação*)](https://docs.aws.amazon.com/pt_br/)      
+     
 <br>
   
  
