@@ -43,9 +43,10 @@ public class PedidoService {
 	@Autowired
 	private ClienteService clienteService;
 
-	public List<Pedido> findAll() {
+	public List<Pedido> listarAll() {
 		return repo.findAll();
 	}
+
 
 	public Pedido listar(Long id) {
 		Optional<Pedido> obj = repo.findById(id);

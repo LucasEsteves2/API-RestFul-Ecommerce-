@@ -34,15 +34,15 @@ public class PedidoController {
 	@Autowired
 	PedidoService service;
 
-	@ApiOperation(value = "Retorna uma lista com todos os Produtos")
+	@ApiOperation(value = "Retorna uma lista com todos os Pedidos")
 	@GetMapping
-	public ResponseEntity<?> listarProdutos() {
-		List<Pedido> list = service.findAll();
+	public ResponseEntity<List<Pedido>> findALL() {
+		List<Pedido> list = service.listarAll();
 
 		return ResponseEntity.ok(list);
 
 	}
-	//a
+	
 
 	@ApiOperation(value = "Busca pedido pelo ID")
 	@GetMapping("/{id}")
