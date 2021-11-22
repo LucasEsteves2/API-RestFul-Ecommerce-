@@ -24,8 +24,7 @@ public class ProdutoDTO implements Serializable {
 	private String descricao;
 	@NotNull(message = " A quantidade Estoque Não pode ser nulo")
 	private Integer qtd_estoque;
-	@NotNull(message = " A data de cadastro  Não pode ser nulo")
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	
 	private Date data_cadastro;
 	
 	

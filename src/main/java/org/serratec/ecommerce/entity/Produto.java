@@ -33,7 +33,7 @@ public class Produto implements Serializable {
 	private String descricao;
 	
 	private Integer qtd_estoque;
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date data_cadastro;
 	
 	private String urlImagem;

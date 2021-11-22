@@ -64,10 +64,7 @@ public class ProdutoController {
 		// convertendo o dto em uma classe
 		Produto obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
-
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-
-		// retorna o uri eo codigo http
 		return ResponseEntity.created(uri).build();
 
 	}
@@ -108,5 +105,8 @@ public class ProdutoController {
 		return ResponseEntity.ok(service.count());
 
 	}
+	
+	
+	
 
 }

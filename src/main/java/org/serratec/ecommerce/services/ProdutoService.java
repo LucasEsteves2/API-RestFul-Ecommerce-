@@ -27,6 +27,10 @@ public class ProdutoService {
 
 	@Autowired
 	private S3Service s3service;
+	
+	
+	
+	
 
 	public List<Produto> listar() {
 		return repo.findAll();
@@ -46,6 +50,7 @@ public class ProdutoService {
 		return repo.save(obj);
 
 	}
+
 
 	public Produto update(Produto obj) {
 		buscar(obj.getId());
@@ -67,9 +72,15 @@ public class ProdutoService {
 
 		Categoria cat = serviceCategoria.buscar(objDto.getIdCategoria());
 
-		return new Produto(null, objDto.getNome(), objDto.getValor(), objDto.getDescricao(), objDto.getQtd_estoque(),
+		Produto prod = new Produto(null, objDto.getNome(), objDto.getValor(), objDto.getDescricao(), objDto.getQtd_estoque(),
 				objDto.getData_cadastro(), cat, null);
 
+		
+		cat.getProduto().add(prod);
+		
+		serviceCategoria.update(cat);
+		return prod;
+		
 	}
 
 	public Page<Produto> search(String nome, List<Long> ids, Integer page, Integer linesPerPage, String orderBy,
@@ -90,4 +101,11 @@ public class ProdutoService {
 		return repo.count();
 	}
 
+	
+	public void salvar(List<Produto> produtos) {
+		repo.saveAll(produtos);
+	}
+	
+	
+	
 }
