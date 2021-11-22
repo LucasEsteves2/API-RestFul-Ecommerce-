@@ -9,6 +9,8 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ClienteNewDTO {
 
 	// CLIENTE
@@ -32,6 +34,7 @@ public class ClienteNewDTO {
 	@NotEmpty(message = "Preenchimento obrigatorio")
 	private String senha;
 
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date data_nasc;
 
 	// ENDERECO
