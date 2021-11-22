@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -34,6 +35,7 @@ public class Cliente implements Serializable {
 	private String cpf;
 	private String nome_usuario;
 	private String senha;
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date data_nasc;
 	private String urlFotoPerfil;
 	
