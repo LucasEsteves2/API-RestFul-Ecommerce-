@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.serratec.ecommerce.entity.Categoria;
 import org.serratec.ecommerce.entity.Produto;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 public class ProdutoDTO implements Serializable {
 	
 	
@@ -23,6 +25,7 @@ public class ProdutoDTO implements Serializable {
 	@NotNull(message = " A quantidade Estoque Não pode ser nulo")
 	private Integer qtd_estoque;
 	@NotNull(message = " A data de cadastro  Não pode ser nulo")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date data_cadastro;
 	
 	

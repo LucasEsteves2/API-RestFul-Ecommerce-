@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/endereços")
 public class EnderecoController {
@@ -22,6 +24,8 @@ public class EnderecoController {
 		return service.findAll();
 	}
 
+	
+	@ApiOperation(value = "Retorna uma lista com todos os endereços cadastrados")
 	@GetMapping("/{cidade}")
 	public List<Endereco> findCidade(@PathVariable String cidade) {
 

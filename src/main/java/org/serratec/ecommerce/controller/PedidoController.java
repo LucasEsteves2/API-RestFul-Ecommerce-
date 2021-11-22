@@ -43,6 +43,7 @@ public class PedidoController {
 
 	}
 
+	@ApiOperation(value = "Busca pedido pelo ID")
 	@GetMapping("/{id}")
 	public ResponseEntity<Pedido> listar(@PathVariable Long id) {
 
@@ -52,7 +53,7 @@ public class PedidoController {
 		return ResponseEntity.ok(obj);
 
 	}
-
+	@ApiOperation(value = "Insere um novo Pedido")
 	@PostMapping()
 	public ResponseEntity<Pedido> insert(@Valid @RequestBody Pedido obj) {
 
@@ -62,6 +63,7 @@ public class PedidoController {
 
 	}
 
+	@ApiOperation(value = "Remove Pedido")
 	@DeleteMapping(value = ("/{id}"))
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 

@@ -5,12 +5,15 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.serratec.ecommerce.dto.CategoriaDTO;
 import org.serratec.ecommerce.dto.ClienteDTO;
 import org.serratec.ecommerce.dto.ClienteNewDTO;
+import org.serratec.ecommerce.entity.Categoria;
 import org.serratec.ecommerce.entity.Cliente;
 import org.serratec.ecommerce.entity.Produto;
 import org.serratec.ecommerce.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -104,5 +107,6 @@ public class ClienteController {
 
 	}
 	
+
 	
 }
