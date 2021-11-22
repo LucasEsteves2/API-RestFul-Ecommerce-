@@ -42,6 +42,7 @@ public class PedidoController {
 		return ResponseEntity.ok(list);
 
 	}
+	//a
 
 	@ApiOperation(value = "Busca pedido pelo ID")
 	@GetMapping("/{id}")
