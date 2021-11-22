@@ -34,14 +34,7 @@ public class PedidoController {
 	@Autowired
 	PedidoService service;
 
-	@ApiOperation(value = "Retorna uma lista com todos os Produtos")
-	@GetMapping
-	public ResponseEntity<?> listarProdutos() {
-		List<Pedido> list = service.listarTosos();
 
-		return ResponseEntity.ok(list);
-
-	}
 	
 
 	@ApiOperation(value = "Busca pedido pelo ID")

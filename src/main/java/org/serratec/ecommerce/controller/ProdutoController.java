@@ -31,6 +31,14 @@ public class ProdutoController {
 	@Autowired
 	ProdutoService service;
 
+	@ApiOperation(value = "Retorna uma lista com todos os Produtos")
+	@GetMapping
+	public ResponseEntity<?> listarProdutos() {
+		List<Produto> list = service.listar();
+
+		return ResponseEntity.ok(list);
+
+	}
 
 	@ApiOperation(value = "Busca por ID")
 	@GetMapping("/{id}")
