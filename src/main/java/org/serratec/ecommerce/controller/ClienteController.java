@@ -38,7 +38,7 @@ public class ClienteController {
 	@Autowired
 	ClienteService service;
 
-	@ApiOperation(value = "Retorna uma Lista de clientes")
+	@ApiOperation(value = "Retorna uma Lista de clientes sem os dados pessoais(cpf,senha)")
 	@GetMapping
 	public ResponseEntity<?> listarProdutos() {
 		List<ClienteDTO> list = service.clientes();

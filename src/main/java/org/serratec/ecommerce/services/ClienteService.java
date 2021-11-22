@@ -44,6 +44,11 @@ public class ClienteService {
 
 	}
 
+	public List<Cliente> findAll()
+	{
+		return repo.findAll();
+	}
+	
 	public Cliente buscar(Long id) {
 		Optional<Cliente> obj = repo.findById(id);
 
