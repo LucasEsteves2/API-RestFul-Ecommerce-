@@ -24,6 +24,7 @@ public class ItemPedido implements Serializable {
 	public ItemPedido() {
 	}
 
+	
 	public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
 		super();
 		id.setPedido(pedido);

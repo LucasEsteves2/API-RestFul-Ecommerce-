@@ -6,9 +6,12 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.serratec.ecommerce.dto.PedidoDTO;
+import org.serratec.ecommerce.entity.Cliente;
 import org.serratec.ecommerce.entity.ItemPedido;
 import org.serratec.ecommerce.entity.PagamentoComBoleto;
 import org.serratec.ecommerce.entity.Pedido;
+import org.serratec.ecommerce.entity.Produto;
 import org.serratec.ecommerce.entity.enums.EstadoPagamento;
 import org.serratec.ecommerce.repositories.ItemPedidoRepository;
 import org.serratec.ecommerce.repositories.PagamentoRepository;
@@ -36,12 +39,13 @@ public class PedidoService {
 
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
-	
-	public List<Pedido> findAll()
-	{
+
+	@Autowired
+	private ClienteService clienteService;
+
+	public List<Pedido> findAll() {
 		return repo.findAll();
 	}
-	
 
 	public Pedido listar(Long id) {
 		Optional<Pedido> obj = repo.findById(id);
@@ -51,8 +55,6 @@ public class PedidoService {
 
 	@Transactional
 	public Pedido insert(Pedido obj) {
-		
-		
 		obj.setId(null);
 		obj.setInstante(new Date());
 		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
@@ -72,20 +74,36 @@ public class PedidoService {
 		return obj;
 	}
 
-	
 	public void delete(Long id) {
 		listar(id);
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possivel excluir um pedido que ja tenha sido VALIDADO(REGRA DE NEGOCIo)!! ");
+			throw new DataIntegrityException(
+					"Não é possivel excluir um pedido que ja tenha sido VALIDADO(REGRA DE NEGOCIo)!! ");
 
 		}
 
 	}
-	
+
 	public Long count() {
 		return repo.count();
 	}
-	
+
+	public Pedido fromDTO(PedidoDTO objDto) {
+
+		Cliente cliente = clienteService.buscar(objDto.getIdcliente());
+		Pedido pedido = new Pedido(null, objDto.getData_pedido(), cliente, cliente.getEnderecos().get(1));
+		Produto produto = produtoService.buscar(objDto.getIdProduto());
+
+		ItemPedido item = new ItemPedido(pedido, produto, null, null, null);
+
+		pedido.setPagamento(objDto.getPagamento());
+		pedido.setData_pedido(objDto.getData_pedido());
+		pedido.setInstante(null);
+		pedido.getItens().add(item);
+		return pedido;
+
+	}
+
 }
