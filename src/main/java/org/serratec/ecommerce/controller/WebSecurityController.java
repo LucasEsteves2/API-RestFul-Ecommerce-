@@ -46,9 +46,10 @@ public class WebSecurityController {
 		end = enderecoService.findCidade(cidade);
 
 		List<Cliente> cli = new ArrayList<Cliente>();
-
+int i=0;
 		for (Endereco x : end) {
-			cli.add(end.get(0).getCliente());
+			i++;
+			cli.add(end.get(i).getCliente());
 		}
 
 		return ResponseEntity.ok(cli);
@@ -56,7 +57,7 @@ public class WebSecurityController {
 	}
 
 	@ApiOperation(value = "Retorna uma lista com todos os endereços cadastrados(preicsa estar autenticado")
-	@GetMapping
+	@GetMapping("/endereco")
 	public ResponseEntity<List<Endereco>> findAll() {
 		List<Endereco> end = new ArrayList<>();
 		end = enderecoService.findAll();
