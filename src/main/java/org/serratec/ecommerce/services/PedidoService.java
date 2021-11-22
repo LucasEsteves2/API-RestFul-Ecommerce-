@@ -43,7 +43,7 @@ public class PedidoService {
 	@Autowired
 	private ClienteService clienteService;
 
-	public List<Pedido> listarAll() {
+	public List<Pedido> listarTosos() {
 		return repo.findAll();
 	}
 
