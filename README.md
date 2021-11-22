@@ -59,15 +59,7 @@
   </details>
 <BR>
 
-
-### 📖Se o Usuario estiver logado ele poderá:
-- Adicionar foto (FOTO DE PERFIL)
-- Visualizar todos os endereços cadastrados pelo id ou pela cidade.<br> 
-- Visualizar todos os clientes (todas informações).<br> 
-- Buscar cliente por CPF.<br> 
-
-<BR>
-
+⚠️🔃**Faça o login através do endpoint /login para poder acessar todos os endpoints  <br><br> 
 
 ⚠️🔃**UTILIZAR O SEGUINTE MODELO PARA INSERIR UM NOVO PEDIDO <br><br> 
 {
@@ -90,7 +82,6 @@
 }
 
 
-
 <br>
 <details>
 <summary>Diagrama ER</summary>
@@ -100,6 +91,17 @@
 <br>
      
 
+## 🔒Autenticação [LOGIN-TOKEN]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://apiserratec.herokuapp.com/swagger-ui.html#/">**GERA UM TOKEN DE 15 MINTUOS**  </a>
+
+
+### 📖Se o Usuario estiver logado ele poderá:
+- Adicionar foto (FOTO DE PERFIL)
+- Visualizar todos os endereços cadastrados pelo id ou pela cidade.<br> 
+- Visualizar todos os clientes (todas informações).<br> 
+- Buscar cliente por CPF.<br> 
+
+<BR>
 
 ## <img  height="45px" align="center" src="https://github.com/marcosbarker/serratec.residencia/blob/main/assets/stockrocketgif.gif"> Tecnologia Utilizada
 - [**DBeaver**](https://dbeaver.io/)    [(*Documentação*)](https://dbeaver.com/docs/wiki/)
