@@ -46,10 +46,10 @@ public class WebSecurityController {
 		end = enderecoService.findCidade(cidade);
 
 		List<Cliente> cli = new ArrayList<Cliente>();
-int i=0;
+		
 		for (Endereco x : end) {
-			i++;
-			cli.add(end.get(i).getCliente());
+			
+			cli.add(x.getCliente());
 		}
 
 		return ResponseEntity.ok(cli);
