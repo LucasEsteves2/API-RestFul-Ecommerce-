@@ -25,8 +25,7 @@ public class ProdutoDTO implements Serializable {
 	@NotNull(message = " A quantidade Estoque Não pode ser nulo")
 	private Integer qtd_estoque;
 	
-	private Date data_cadastro;
-	
+	private String urlImg;
 	
 	private Long idCategoria;
 	
@@ -83,14 +82,6 @@ public class ProdutoDTO implements Serializable {
 	}
 
 
-	public Date getData_cadastro() {
-		return data_cadastro;
-	}
-
-
-	public void setData_cadastro(Date data_cadastro) {
-		this.data_cadastro = data_cadastro;
-	}
 
 	public Long getIdCategoria() {
 		return idCategoria;
@@ -98,6 +89,12 @@ public class ProdutoDTO implements Serializable {
 	
 	public void setIdCategoria(Long idCategoria) {
 		this.idCategoria = idCategoria;
+	}
+	public String getUrlImg() {
+		return urlImg;
+	}
+	public void setUrlImg(String urlImg) {
+		this.urlImg = urlImg;
 	}
 	
 	

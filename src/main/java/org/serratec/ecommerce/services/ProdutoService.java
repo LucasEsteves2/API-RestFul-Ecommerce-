@@ -1,6 +1,7 @@
 package org.serratec.ecommerce.services;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,10 +28,6 @@ public class ProdutoService {
 
 	@Autowired
 	private S3Service s3service;
-	
-	
-	
-	
 
 	public List<Produto> listar() {
 		return repo.findAll();
@@ -50,7 +47,6 @@ public class ProdutoService {
 		return repo.save(obj);
 
 	}
-
 
 	public Produto update(Produto obj) {
 		buscar(obj.getId());
@@ -72,15 +68,16 @@ public class ProdutoService {
 
 		Categoria cat = serviceCategoria.buscar(objDto.getIdCategoria());
 
-		Produto prod = new Produto(null, objDto.getNome(), objDto.getValor(), objDto.getDescricao(), objDto.getQtd_estoque(),
-				objDto.getData_cadastro(), cat, null);
+		Produto prod = new Produto(null, objDto.getNome(), objDto.getValor(), objDto.getDescricao(),
+				objDto.getQtd_estoque(), new Date(), cat, null);
 
-		
+		prod.setUrlImagem(objDto.getUrlImg());
+
 		cat.getProduto().add(prod);
-		
+
 		serviceCategoria.update(cat);
 		return prod;
-		
+
 	}
 
 	public Page<Produto> search(String nome, List<Long> ids, Integer page, Integer linesPerPage, String orderBy,
@@ -101,11 +98,8 @@ public class ProdutoService {
 		return repo.count();
 	}
 
-	
 	public void salvar(List<Produto> produtos) {
 		repo.saveAll(produtos);
 	}
-	
-	
-	
+
 }
