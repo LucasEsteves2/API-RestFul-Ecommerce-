@@ -123,7 +123,7 @@
 
 
  ## ☁ Upload de Imagens [AWS-S3 BUCKECT]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://apiserratec.herokuapp.com/swagger-ui.html#/">**Armazenamento de imagens utiliznado o servidor da amazon**  </a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://apiserratec.herokuapp.com/swagger-ui.html#/">**Armazenamento de imagens utilizando o servidor da amazon**  </a>
 
    <div align="center">
   <img width="1000px" src="assets/aws.gif">
