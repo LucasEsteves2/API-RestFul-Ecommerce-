@@ -57,8 +57,18 @@
       4:  Cliente deve possuir OBRIGATORIAMENTE UM ENDEREÇO<br>
       5:  Clietne  <br>
   </details>
+  
+<details>
+<summary>Diagrama ER</summary>
+<img align="center" src="assets/Class Diagrama.jpg">
+</details>
+
+  
+  
 <BR>
 
+  
+  
 ⚠️🔃**Faça o login através do endpoint /login para poder acessar todos os endpoints  <br><br> 
 
 ⚠️🔃**UTILIZAR O SEGUINTE MODELO PARA INSERIR UM NOVO PEDIDO <br><br> 
@@ -82,27 +92,54 @@
 }
 
 
-<br>
-<details>
-<summary>Diagrama ER</summary>
-<img align="center" src="assets/Class Diagrama.jpg">
-</details>
 
 <br>
      
 
 ## 🔒Autenticação [LOGIN-TOKEN]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://apiserratec.herokuapp.com/swagger-ui.html#/">**GERA UM TOKEN DE 15 MINTUOS**  </a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Realizar login através do endpoint <a href="https://apiserratec.herokuapp.com/login">/login </a>, será gerado um TOKEN de 15 minutos**  
 
+  <div align="center">
+  <img width="1000px" src="assets/Login.gif">
+</div>
 
 ### 📖Se o Usuario estiver logado ele poderá:
 - Adicionar foto (FOTO DE PERFIL)
+- Acessar o endPoint /security/clientes.<br> 
+- Acessar o endPoint /security/endereco.<br> 
 - Visualizar todos os endereços cadastrados pelo id ou pela cidade.<br> 
 - Visualizar todos os clientes (todas informações).<br> 
 - Buscar cliente por CPF.<br> 
 
+  
+ -Realizar um post no endpoint https://apiserratec.herokuapp.com/login com o e-mail e senha
+ 
+ - TOKEN DE AUTENTICAÇÃO DE 15 MINTUOS  
+
 <BR>
 
+ ## ☁ Upload de Imagens [AWS-S3 BUCKECT]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://apiserratec.herokuapp.com/swagger-ui.html#/">**Armazenamento de imagens utiliznado o servidor da amazon**  </a>
+
+   <div align="center">
+  <img width="1000px" src="assets/aws.gif">
+</div>
+  
+  - Upload de imagens utilizando o servidor aws
+  
+  
+  
+<BR>
+  
+   ## ✔️ INSERINDO PEDIDO [END-POINT]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://apiserratec.herokuapp.com/swagger-ui.html#/">**Inserindo pedidos através do end point /pedidos**  </a>
+ 
+  
+  <div align="center">
+  <img width="1000px" src="assets/insert pedido.gif">
+</div>
+  
+  
 ## <img  height="45px" align="center" src="https://github.com/marcosbarker/serratec.residencia/blob/main/assets/stockrocketgif.gif"> Tecnologia Utilizada
 - [**DBeaver**](https://dbeaver.io/)    [(*Documentação*)](https://dbeaver.com/docs/wiki/)
 - [**Mailtrap**](https://mailtrap.io/)    [(*Documentação*)](https://mailtrap.docs.apiary.io/#)    
